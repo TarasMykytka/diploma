@@ -22,6 +22,22 @@ $(document).ready(function()
             r.onload = function(e)
             {
                 csv_content = e.target.result;
+
+            //    Header checker
+                header = false;
+                line_end = csv_content.indexOf('\n');
+                line = csv_content.substr(0,line_end).split(',');
+                for (i=0;i<line_end-1;i++)
+                {
+                    if (!$.isNumeric(line[i]))
+                        header = true;
+                }
+
+                if (header)
+                {
+                    csv_content = csv_content.substr(line_end+2,csv_content.length);
+                }
+
             }
             r.readAsText(f);
         }
