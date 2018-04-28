@@ -1,0 +1,94 @@
+// compileCompressed: ../css/common.min.css
+//Base styles
+// @import "../js/libs/animate/animate";
+// @import "../js/libs/fancybox/jquery.fancybox";
+// @import "../js/libs/fotorama/fotorama";
+// @import "../fonts/font-awesome/font-awesome.min";
+// @import "loader";
+@import 'fonts'
+@import 'color'
+@import 'bourbon/bourbon'
+@import 'neat/neat'
+@import 'base/base'
+@import 'mixins'
+@import 'font_awersome'
+
+
+*
+  transition: color .5s ease, background-color .5s ease
+
+*::-webkit-input-placeholder
+  color: #666
+  opacity: 1
+
+*:-moz-placeholder
+  color: #666
+  opacity: 1
+
+*::-moz-placeholder
+  color: #666
+  opacity: 1
+
+*:-ms-input-placeholder
+  color: #666
+  opacity: 1
+
+input, textarea
+  -webkit-appearance: none
+  border-radius: 0
+
+th
+  text-align: center
+
+input[type="submit"]
+  background-color: $link
+  &:hover
+    background-color: $link_hover
+
+a
+  color: $link
+  cursor: pointer
+
+a:hover, a:focus
+  color: $link_hover
+
+
+body
+  margin: 0px
+  font-size: 16px
+  min-width: 320px
+  position: relative
+  line-height: 1.6
+  font-family: "SegoeUI", $helvetica
+  overflow-x: hidden
+
+.hidden
+  display: none
+
+.no-opacity
+  opacity: 0
+
+.opacity
+  opacity: 1
+
+button
+  border: 1px solid $cm
+  border-radius: 2px
+  background-color: transparent
+  color: $cm
+  min-width: 50px
+  margin: 0 auto
+  outline: none
+button:hover,
+button:focus
+  background-color: $cm
+  color: #fff
+
+h1,h2,h3,h4,h5,h6
+  font-family: "SegoeUI"
+
+
+@import '../js/libs/rangeslider/rangeslider.scss'
+@import 'style'
+
+

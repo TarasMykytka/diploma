@@ -1,0 +1,295 @@
+// main: common.scss
+//Style
+body
+
+
+
+
+.header
+  position: relative
+  width: 100%
+  height: 400px
+  background-color: $cm
+  background-position: center center
+  background-size: cover
+  transition: .3s ease
+  +MQ(XXLneg)
+    height: 350px
+
+  &--lab
+    height: 500px
+    +MQ(XXLneg)
+      height: 450px
+
+  &__nav
+    width: 100%
+    height: 100px
+
+  &__to_home
+    float: left
+    @extend %fa-arrow-left
+
+  &__log
+    float: right
+    @extend %fa-user
+
+  &__to_home,&__log
+    display: block
+    margin: 20px 50px
+    color: #fff
+    background-color: rgba(255,255,255,0)
+    line-height: 60px
+    font-size: 24px
+    padding: 0 10px
+    transition: .5s ease
+    border-radius: 3px
+
+    +hf
+      background-color: rgba(255,255,255,1)
+      color: $cm
+      box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)
+
+
+    &:before
+      @extend %fa
+      margin-right: 8px
+      margin-top: -2px
+
+  &__title
+    margin-top: 25px
+    font-size: 46px
+    +MQ(XXLneg)
+      font-size: 32px
+    +MQ(Lneg)
+      font-size: 28px
+
+  &__lab_title
+    font-size: 36px
+    +MQ(XXLneg)
+      font-size: 24px
+    +MQ(Lneg)
+      font-size: 22px
+
+  &__lab_theme
+    font-size: 46px
+    +MQ(XXLneg)
+      font-size: 32px
+    +MQ(Lneg)
+      font-size: 28px
+
+  &__title,
+  &__lab_title,
+  &__lab_theme
+    +span-columns(8)
+    +shift(2)
+    text-align: center
+    color: #fff
+
+
+
+.content
+  +outer-container(100%)
+  transition: .3s ease
+  margin-top: -100px
+
+  &__wraper
+    border-radius: 3px
+    position: relative
+    +span-columns(8)
+    +shift(2)
+    margin-bottom: 100px
+    padding: 70px 50px
+    text-align: center
+    background-color: $ct
+    transition: all 0.2s ease
+    box-shadow: 0 4px 20px rgba(0,0,0,0.19), 0 3px 10px rgba(0,0,0,0.23)
+    +hf
+      box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 20px rgba(0,0,0,0.23)
+
+
+    +MQ(Lneg)
+      +span-columns(10)
+      +shift(1)
+
+
+.lab-list
+  list-style-type: none
+  margin: 0
+  padding: 0
+
+  &__lab
+    padding: 10px 0
+    border-bottom: 1px dashed $link_hover
+
+    &:last-child
+      border-bottom: none
+
+
+  &__num
+      display: block
+      width: 100%
+      font-size: 32px
+      margin-bottom: .75em
+      color: $link
+      +MQ(XXLneg)
+        font-size: 28px
+      +MQ(Lneg)
+        font-size: 24px
+
+
+  &__lab_cont
+    display: none
+    padding-bottom: 15px
+
+  &__title
+    letter-spacing: 1px
+    font-size: 28px
+    +MQ(XXLneg)
+      font-size: 24px
+    +MQ(Lneg)
+      font-size: 20px
+
+  &__lab_btn
+    display: block
+    width: 380px
+    line-height: 30px
+    color: $link
+    background-color: rgba(0,0,0,0)
+    border: 1px solid $link
+    border-radius: 3px
+    margin: 40px auto 10px
+    padding: 10px 20px
+    transition: .5s ease
+    font-size: 24px
+    @extend %fa-tasks
+    +MQ(Lneg)
+      width: 350px
+      line-height: 24px
+      padding: 10px 25px
+      font-size: 20px
+      margin: 20px auto 10px
+
+    &:before
+      @extend %fa
+      float: left
+      font-size: 34px
+      line-height: 65px
+      color: $link
+      +MQ(Lneg)
+        font-size: 30px
+        line-height: 54px
+
+
+    +hf
+      background-color: $link_hover
+      color: $ct
+      &:before
+        color: $ct
+
+
+
+
+.lab
+  &__file_wrapper,
+  &__range_wrapper,
+  &__num_wrapper,
+  &__distance_wrapper,
+  &__test-samples_wrapper,
+  &__result_wrapper
+    margin: 20px auto
+    width: 50%
+    +clearfix
+
+    +MQ(XXLneg)
+      width: 55%
+    +MQ(Lneg)
+      width: 60%
+
+  &__file
+    width: 0.1px
+    height: 0.1px
+    opacity: 0
+    overflow: hidden
+    position: absolute
+    z-index: -1
+
+    & + label:hover
+      border-color: $link_hover
+      color: $link_hover
+      outline: 1px dotted #000
+      outline: -webkit-focus-ring-color auto 5px
+
+
+  &__file + label
+    max-width: 80%
+    font-size: 20px
+    font-weight: 700
+    text-overflow: ellipsis
+    white-space: nowrap
+    cursor: pointer
+    display: inline-block
+    overflow: hidden
+    padding: 10px 20px
+    color: $link
+    border: 2px solid $link
+    @extend %fa-upload
+
+    &:before
+      @extend %fa
+
+
+    &:focus + label,
+    &.has-focus + label
+      border-color: $link_hover
+      color: $link_hover
+      outline: 1px dotted #000
+      outline: -webkit-focus-ring-color auto 5px
+
+  &__file_err,
+  &__test-samples_err
+    display: none
+    width: 80%
+    margin: 0 auto
+    font-size: 18px
+    color: $c_err
+    text-align: center
+
+  &__range_output
+    float: right
+    display: block
+    width: 50px!important
+    text-align: center
+
+  &__num
+    width: 70px!important
+    margin: 0 auto .75em
+    text-align: center
+
+  &__distance
+    height: 30px
+    margin: 0 auto .75em
+
+  &__test-samples
+    width: 150px!important
+    margin: 0 auto .75em
+    text-align: center
+    &_count
+      display: none
+      margin: 0 auto .75em
+      text-align: center
+
+  &__result
+    text-align: center
+    font-size: 24px
+    margin: 0 auto .75em
+
+    &_wrapper
+      display: none
+
+
+
+
+.rangeslider--horizontal
+  float: left
+  width: 80%
+  margin-top: 8px
