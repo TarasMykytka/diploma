@@ -2,9 +2,22 @@
 <html lang="ua">
 <head>
     <meta charset="UTF-8">
-    <title><?php if(isset($_GET['lab'])){ echo "Лабораторна робота №" . $data[0]["lab_id"]." - ";}?>Комп'ютерні системи штучного інтелекту<?php if(!isset($data)){ echo "- Лабораторні роботи";}?></title>
+    <title>
+        <?if(isset($_GET['lab']))
+        {
+            echo "Лабораторна робота №" . $data[0]." - ";
+        }
+        ?>
+        Комп'ютерні системи штучного інтелекту
+        <?if(!isset($data))
+        {
+            echo "- Лабораторні роботи";
+        }?>
+    </title>
     <meta name="description" content="">
-	  <meta name="keywords" content="">
+    <meta name="keywords" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <link rel="apple-touch-icon-precomposed" sizes="57x57" href="assets/img/favicons/apple-touch-icon-57x57.png" />
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/img/favicons/apple-touch-icon-114x114.png" />
@@ -20,9 +33,26 @@
     <link rel="icon" type="image/png" href="assets/img/favicons/favicon-128.png" sizes="128x128" />
 
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
     <link rel="stylesheet" href="assets/css/common.css">
 </head>
+
 <body>
+
+    <div class="header <?if(isset($_GET['lab'])) echo 'header--lab';?>">
+        <div class="header__nav">
+            <?
+                if(isset($_GET['lab']))
+                {
+                    echo '<a href="/" class="header__to_home">На головну</a>';
+                }
+            ?>
+        </div>
+        <h1 class="header__title">Комп'ютерні системи штучного інтелекту</h1>
+        <?
+            if(isset($_GET['lab']))
+            {
+                echo "<h2 class=\"header__lab_title\">Лабораторна робота №".$data[0]."</h2>";
+                echo "<h2 class=\"header__lab_theme\">".$data[1]."</h2>";
+            }
+        ?>
+    </div>

@@ -53,9 +53,11 @@ $(document).ready(function()
             label.html( labelVal );
     });
 
-    //Range
+    //Range & count
     var lab_range = $('.lab__range'),
-        lab_range_output = $('.lab__range_output');
+        lab_range_output = $('.lab__range_output'),
+        lab_cost = $('.lab__cost'),
+        lab_cost_output = $('.lab__cost_output');
 
     lab_range.rangeslider({
         polyfill: false,
@@ -63,10 +65,12 @@ $(document).ready(function()
             lab_range_output.val(value);
         }
     });
-
-    // Class count
-    var class_count = $('.lab__num'),
-        class_count_err = $('.lab__num_err');
+    lab_cost.rangeslider({
+        polyfill: false,
+        onSlide: function(position, value) {
+            lab_cost_output.val(value);
+        }
+    });
 
     // Samples
     var test_samples = $('.lab__test-samples'),
@@ -116,15 +120,6 @@ $(document).ready(function()
             lab_file_err.slideDown();
         }
 
-        if(class_count.val() == '')
-        {
-            form_valid = false;
-            class_count_err.slideDown();
-        }else{
-            class_count_err.slideUp();
-
-        }
-
         if(!test_samples_checker())
         {
             form_valid = false;
@@ -142,31 +137,33 @@ $(document).ready(function()
             }).done(function(response)
             {
 
-                data = JSON.parse(response);
+                console.log(response);
 
-                keys = Object.keys(data[0]);
-                vals = Object.values(data[0]);
-
-                keys_tr = '<tr>';
-                vals_tr = '<tr>';
-
-                $(keys).each(function ()
-                {
-                    keys_tr += '<td>'+this+'</td>';
-                });
-
-                $(vals).each(function ()
-                {
-                    vals_tr += '<td>'+this.toFixed(2)+'</td>';
-                });
-
-                keys_tr += '</tr>';
-                vals_tr += '</tr>';
-
-                $(result[0]).html(keys_tr+vals_tr);
-                $(result[1]).text(data[1]);
-
-                result_wrapper.slideDown();
+                // data = JSON.parse(response);
+                //
+                // keys = Object.keys(data[0]);
+                // vals = Object.values(data[0]);
+                //
+                // keys_tr = '<tr>';
+                // vals_tr = '<tr>';
+                //
+                // $(keys).each(function ()
+                // {
+                //     keys_tr += '<td>'+this+'</td>';
+                // });
+                //
+                // $(vals).each(function ()
+                // {
+                //     vals_tr += '<td>'+this.toFixed(2)+'</td>';
+                // });
+                //
+                // keys_tr += '</tr>';
+                // vals_tr += '</tr>';
+                //
+                // $(result[0]).html(keys_tr+vals_tr);
+                // $(result[1]).text(data[1]);
+                //
+                // result_wrapper.slideDown();
 
 
             });

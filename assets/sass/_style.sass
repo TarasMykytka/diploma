@@ -195,7 +195,9 @@ body
   &__num_wrapper,
   &__distance_wrapper,
   &__test-samples_wrapper,
-  &__result_wrapper
+  &__result_wrapper,
+  &__kernel_wrapper,
+  &__cost_wrapper
     margin: 20px auto
     width: 50%
     +clearfix
@@ -255,10 +257,11 @@ body
     color: $c_err
     text-align: center
 
-  &__range_output
+  &__range_output,
+  &__cost_output
     float: right
     display: block
-    width: 50px!important
+    width: 70px!important
     text-align: center
 
   &__num
@@ -266,7 +269,8 @@ body
     margin: 0 auto .75em
     text-align: center
 
-  &__distance
+  &__distance,
+  &__kernel
     height: 30px
     margin: 0 auto .75em
 
@@ -292,5 +296,5 @@ body
 
 .rangeslider--horizontal
   float: left
-  width: 80%
+  width: 75%
   margin-top: 8px

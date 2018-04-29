@@ -64,10 +64,6 @@ $(document).ready(function()
         }
     });
 
-    // Class count
-    var class_count = $('.lab__num'),
-        class_count_err = $('.lab__num_err');
-
     // Samples
     var test_samples = $('.lab__test-samples'),
         test_samples_count = $('.lab__test-samples_count'),
@@ -114,15 +110,6 @@ $(document).ready(function()
         {
             form_valid = false;
             lab_file_err.slideDown();
-        }
-
-        if(class_count.val() == '')
-        {
-            form_valid = false;
-            class_count_err.slideDown();
-        }else{
-            class_count_err.slideUp();
-
         }
 
         if(!test_samples_checker())
