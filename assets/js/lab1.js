@@ -27,7 +27,7 @@ $(document).ready(function()
                 header = false;
                 line_end = csv_content.indexOf('\n');
                 line = csv_content.substr(0,line_end).split(',');
-                for (i=0;i<line_end-1;i++)
+                for (i=0;i<line.length-1;i++)
                 {
                     if (!$.isNumeric(line[i]))
                         header = true;
@@ -37,6 +37,10 @@ $(document).ready(function()
                 {
                     csv_content = csv_content.substr(line_end+2,csv_content.length);
                 }
+
+                samples_count = line.length-1;
+
+                test_samples_count.text('Кількість семплів в масиві данних: '+samples_count).slideDown();
 
             }
             r.readAsText(f);
@@ -66,6 +70,49 @@ $(document).ready(function()
         lab_range.rangeslider('update', true);
     });
 
+    // Class count
+    var class_count = $('.lab__num'),
+        class_count_err = $('.lab__num_err');
+
+    // Samples
+    var test_samples = $('.lab__test-samples'),
+        test_samples_count = $('.lab__test-samples_count'),
+        test_samples_err = $('.lab__test-samples_err'),
+        samples_count;
+
+        test_samples_checker = function ()
+        {
+            if(test_samples.val() != '')
+            {
+                test_samples_arr = test_samples.val().split(',');
+                if (test_samples_arr.length != samples_count)
+                {
+
+                    console.log('test samples err count');
+
+                    console.log('test samples err '+test_samples_arr.length);
+                    test_samples_err.slideDown();
+                    return false;
+                }
+                test_samples_err.slideUp();
+                return true;
+            }
+            else
+            {
+                console.log('test samples err ""');
+                test_samples_err.slideDown();
+                return false;
+
+            }
+
+        }
+
+
+    //    Result
+
+    var result = $('.lab__result'),
+        result_wrapper = $('.lab__result_wrapper');
+
 
     //Submit
     $('.lab__submit').click(function(event)
@@ -80,17 +127,68 @@ $(document).ready(function()
             lab_file_err.slideDown();
         }
 
+        if(class_count.val() == '')
+        {
+            form_valid = false;
+            class_count_err.slideDown();
+        }else{
+            class_count_err.slideUp();
+
+        }
+
+        if(!test_samples_checker())
+        {
+            console.log('test samples err last');
+            form_valid = false;
+        }
+
+        //
+
+        if(lab_file.val() == '')
+        {
+            form_valid = false;
+            lab_file_err.slideDown();
+        }
+
         if(form_valid)
         {
 
-            data = 'data='+csv_content+'&'+$('.form1').serialize();
+            data = 'data='+csv_content+'&'+$('.form').serialize();
 
             $.ajax({
                 type: "POST",
                 url: "control\\lab_executer.php",
                 data: data
-            }).done(function(response) {
-                console.log(response);
+            }).done(function(response)
+            {
+
+                data = JSON.parse(response);
+
+                keys = Object.keys(data[0]);
+                vals = Object.values(data[0]);
+
+                keys_tr = '<tr>';
+                vals_tr = '<tr>';
+
+                $(keys).each(function ()
+                {
+                    keys_tr += '<td>'+this+'</td>';
+                });
+
+                $(vals).each(function ()
+                {
+                    vals_tr += '<td>'+this.toFixed(2)+'</td>';
+                });
+
+                keys_tr += '</tr>';
+                vals_tr += '</tr>';
+
+                $(result[0]).html(keys_tr+vals_tr);
+                $(result[1]).text(data[1]);
+
+                result_wrapper.slideDown();
+
+
             });
         }
     });
