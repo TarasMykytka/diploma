@@ -42,7 +42,7 @@
                         <div class="lab__num_wrapper">
                             <h3 class="lab__test-samples_title">Семпли для перевірки</h3>
                             <div class="lab__test-samples_count"></div>
-                            <input class="lab__test-samples" id="test-samples" name="test-samples" type="text" value="">
+                            <input class="lab__test-samples" id="test-samples" name="test-samples" type="text" value="5.1,3.5,1.4,0.2">
                             <div class="lab__test-samples_err">Введіть коректно семпли</div>
                         </div>
                         <input id="lab_id" name="lab_id" type="hidden" value="<?=$data[0];?>">

@@ -192,7 +192,7 @@ if(isset($_POST['lab_id']))
             $classifier = new SVC(KERNEL::LINEAR,$cost);
         }
 
-        print_r($classifier);
+//        print_r($classifier);
 
 //        Create Dataset
         $samples = array();
