@@ -20,6 +20,7 @@ use Phpml\Classification\NaiveBayes;
 use Phpml\Classification\SVC;
 use Phpml\SupportVectorMachine\Kernel;
 use Phpml\Regression\LeastSquares;
+use Phpml\Regression\SVR;
 
 
 if(isset($_POST['lab_id']))
@@ -302,6 +303,92 @@ if(isset($_POST['lab_id']))
         $echoArray[] = $regression->predict($testSample); // Результат передбачення
 //
         echo json_encode($echoArray);
+
+
+
+    }
+    elseif($_POST['lab_id'] == 5)
+    {
+//        Get Data
+        $data = explode("\n",$_POST['data']);
+        $split = $_POST['split'];
+
+        $cost = $_POST['cost'];
+        $kernel = $_POST['kernel'];
+
+        $testSample = explode(',',$_POST['test-samples']);
+
+
+        if($kernel == 'RBF')
+        {
+
+            $classifier = new SVR(KERNEL::RBF,3,0.1, $cost);
+        }
+        elseif($kernel == 'POLYNOMIAL')
+        {
+
+            $classifier = new SVR(KERNEL::POLYNOMIAL,3,0.1, $cost);
+        }
+        elseif($kernel == 'SIGMOID')
+        {
+
+            $classifier = new SVR(KERNEL::SIGMOID,3,0.1, $cost);
+        }
+        elseif($kernel == 'LINEAR')
+        {
+
+            $classifier = new SVR(KERNEL::LINEAR, 3,0.1, $cost);
+        }
+
+//        print_r($classifier);
+
+//        Create Dataset
+        $samples = array();
+        $labels = array();
+
+        foreach ($data as $row)
+        {
+            if(isset($row) && $row !='')
+            {
+                $arrSamples = array();
+                $arrRow = explode(',',$row);
+                $last_index = count($arrRow)-1;
+                for ($i=0;$i<$last_index;$i++)
+                {
+                    $arrSamples[] = $arrRow[$i];
+                }
+                $samples[] = $arrSamples;
+                $labels[] = $arrRow[$last_index];
+
+            }
+        }
+
+        $dataset = new ArrayDataset($samples, $labels);
+//        print_r($dataset);
+
+
+
+        $randomSplit = new RandomSplit($dataset, $split);
+
+//        $classifier->train($randomSplit->getTrainSamples(), $randomSplit->getTrainLabels());
+//        $classifier->train([[1, 3], [1, 4], [2, 4], [3, 1], [4, 1], [4, 2]],['a', 'a', 'a', 'b', 'b', 'b']);
+//
+//        $testPredict = $classifier->predict($randomSplit->getTestSamples());
+//
+//
+//        $report = new ClassificationReport($randomSplit->getTestLabels(), $testPredict);
+//
+//        $precision = $report->getPrecision();
+//
+////        Print
+//        $echoArray = array();
+//
+//
+//        $echoArray[] = $report->getF1score(); // Точність для тестової вибірки
+//
+//        $echoArray[] = $classifier->predict($testSample); // Результат передбачення
+//
+//        echo json_encode($echoArray);
 
 
 
