@@ -19,6 +19,7 @@ use Phpml\Classification\KNearestNeighbors;
 use Phpml\Classification\NaiveBayes;
 use Phpml\Classification\SVC;
 use Phpml\SupportVectorMachine\Kernel;
+use Phpml\Regression\LeastSquares;
 
 
 if(isset($_POST['lab_id']))
@@ -241,6 +242,66 @@ if(isset($_POST['lab_id']))
 //        $echoArray[] = $classifier->predict($testSample); // Результат передбачення
 //
 //        echo json_encode($echoArray);
+
+
+
+    }
+    elseif($_POST['lab_id'] == 4)
+    {
+//        Get Data
+        $data = explode("\n",$_POST['data']);
+        $split = $_POST['split'];
+        $testSample = explode(',',$_POST['test-samples']);
+
+        $regression = new LeastSquares();
+
+
+//        Create Dataset
+        $samples = array();
+        $labels = array();
+
+        foreach ($data as $row)
+        {
+            if(isset($row) && $row !='')
+            {
+                $arrSamples = array();
+                $arrRow = explode(',',$row);
+                $last_index = count($arrRow)-1;
+                for ($i=0;$i<$last_index;$i++)
+                {
+                    $arrSamples[] = $arrRow[$i];
+                }
+                $samples[] = $arrSamples;
+                $labels[] = $arrRow[$last_index];
+
+            }
+        }
+
+        $dataset = new ArrayDataset($samples, $labels);
+//        print_r($dataset);
+
+
+
+        $randomSplit = new RandomSplit($dataset, $split);
+
+        $regression->train($randomSplit->getTrainSamples(), $randomSplit->getTrainLabels());
+
+        $testPredict = $regression->predict($randomSplit->getTestSamples());
+
+
+        $report = new ClassificationReport($randomSplit->getTestLabels(), $testPredict);
+
+        $precision = $report->getPrecision();
+//
+//        Print
+        $echoArray = array();
+
+
+        $echoArray[] = [$regression->getCoefficients(),$regression->getIntercept()];
+
+        $echoArray[] = $regression->predict($testSample); // Результат передбачення
+//
+        echo json_encode($echoArray);
 
 
 
