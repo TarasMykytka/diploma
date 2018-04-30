@@ -163,29 +163,29 @@ if(isset($_POST['lab_id']))
 
 //        Create Dataset
         $dataset = getdataset($data);
-
-
-
-        $randomSplit = new RandomSplit($dataset, $split);
-
-//        $classifier->train($randomSplit->getTrainSamples(), $randomSplit->getTrainLabels());
-//        $classifier->train([[1, 3], [1, 4], [2, 4], [3, 1], [4, 1], [4, 2]],['a', 'a', 'a', 'b', 'b', 'b']);
 //
+//
+//
+        $randomSplit = new RandomSplit($dataset, $split);
+//
+        $classifier->train($randomSplit->getTrainSamples(), $randomSplit->getTrainLabels());
+////        $classifier->train([[1, 3], [1, 4], [2, 4], [3, 1], [4, 1], [4, 2]],['a', 'a', 'a', 'b', 'b', 'b']);
+////
         $testPredict = $classifier->predict($randomSplit->getTestSamples());
-
-
+//
+//
         $report = new ClassificationReport($randomSplit->getTestLabels(), $testPredict);
-
-//        $precision = $report->getPrecision();
-
-//        Print
+//
+////        $precision = $report->getPrecision();
+//
+////        Print
         $echoArray = array();
-
-
+//
+//
         $echoArray[] = $report->getF1score(); // Точність для тестової вибірки
-
+//
         $echoArray[] = $classifier->predict($testSample); // Результат передбачення
-
+//
         echo json_encode($echoArray);
 
 
@@ -223,7 +223,7 @@ if(isset($_POST['lab_id']))
         $echoArray = array();
 
 
-        $echoArray[] = [$regression->getCoefficients(),$regression->getIntercept()];
+        $echoArray[] = [$regression->getCoefficients(),$regression->getIntercept()]; // Рівняння прамої
 
         $echoArray[] = $regression->predict($testSample); // Результат передбачення
 //
@@ -247,22 +247,22 @@ if(isset($_POST['lab_id']))
         if($kernel == 'RBF')
         {
 
-            $classifier = new SVR(KERNEL::RBF,3,0.1, $cost);
+            $regression = new SVR(KERNEL::RBF,3,0.1, $cost);
         }
         elseif($kernel == 'POLYNOMIAL')
         {
 
-            $classifier = new SVR(KERNEL::POLYNOMIAL,3,0.1, $cost);
+            $regression = new SVR(KERNEL::POLYNOMIAL,3,0.1, $cost);
         }
         elseif($kernel == 'SIGMOID')
         {
 
-            $classifier = new SVR(KERNEL::SIGMOID,3,0.1, $cost);
+            $regression = new SVR(KERNEL::SIGMOID,3,0.1, $cost);
         }
         elseif($kernel == 'LINEAR')
         {
 
-            $classifier = new SVR(KERNEL::LINEAR, 3,0.1, $cost);
+            $regression = new SVR(KERNEL::LINEAR, 3,0.1, $cost);
         }
 
 //        print_r($classifier);
@@ -277,25 +277,25 @@ if(isset($_POST['lab_id']))
 
         $randomSplit = new RandomSplit($dataset, $split);
 
-//        $classifier->train($randomSplit->getTrainSamples(), $randomSplit->getTrainLabels());
+        $regression->train($randomSplit->getTrainSamples(), $randomSplit->getTrainLabels());
 //        $classifier->train([[1, 3], [1, 4], [2, 4], [3, 1], [4, 1], [4, 2]],['a', 'a', 'a', 'b', 'b', 'b']);
-//
-//        $testPredict = $classifier->predict($randomSplit->getTestSamples());
-//
-//
-//        $report = new ClassificationReport($randomSplit->getTestLabels(), $testPredict);
-//
+
+        $testPredict = $regression->predict($randomSplit->getTestSamples());
+
+
+        $report = new ClassificationReport($randomSplit->getTestLabels(), $testPredict);
+
 //        $precision = $report->getPrecision();
-//
-////        Print
-//        $echoArray = array();
-//
-//
+
+//        Print
+        $echoArray = array();
+
+
 //        $echoArray[] = $report->getF1score(); // Точність для тестової вибірки
-//
-//        $echoArray[] = $classifier->predict($testSample); // Результат передбачення
-//
-//        echo json_encode($echoArray);
+
+        $echoArray[] = $regression->predict($testSample); // Результат передбачення
+
+        echo json_encode($echoArray);
 
 
 

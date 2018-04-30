@@ -119,10 +119,12 @@ $(document).ready(function()
             form_valid = false;
             lab_file_err.slideDown();
         }
-
-        if(!test_samples_checker())
+        else
         {
-            form_valid = false;
+            if(!test_samples_checker())
+            {
+                form_valid = false;
+            }
         }
 
         if(form_valid)
@@ -137,33 +139,31 @@ $(document).ready(function()
             }).done(function(response)
             {
 
-                console.log(response);
+                data = JSON.parse(response);
 
-                // data = JSON.parse(response);
-                //
-                // keys = Object.keys(data[0]);
-                // vals = Object.values(data[0]);
-                //
-                // keys_tr = '<tr>';
-                // vals_tr = '<tr>';
-                //
-                // $(keys).each(function ()
-                // {
-                //     keys_tr += '<td>'+this+'</td>';
-                // });
-                //
-                // $(vals).each(function ()
-                // {
-                //     vals_tr += '<td>'+this.toFixed(2)+'</td>';
-                // });
-                //
-                // keys_tr += '</tr>';
-                // vals_tr += '</tr>';
-                //
-                // $(result[0]).html(keys_tr+vals_tr);
-                // $(result[1]).text(data[1]);
-                //
-                // result_wrapper.slideDown();
+                keys = Object.keys(data[0]);
+                vals = Object.values(data[0]);
+
+                keys_tr = '<tr>';
+                vals_tr = '<tr>';
+
+                $(keys).each(function ()
+                {
+                    keys_tr += '<td>'+this+'</td>';
+                });
+
+                $(vals).each(function ()
+                {
+                    vals_tr += '<td>'+this.toFixed(2)+'</td>';
+                });
+
+                keys_tr += '</tr>';
+                vals_tr += '</tr>';
+
+                $(result[0]).html(keys_tr+vals_tr);
+                $(result[1]).text(data[1]);
+
+                result_wrapper.slideDown();
 
 
             });
