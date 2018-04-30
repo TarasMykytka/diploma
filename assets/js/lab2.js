@@ -111,10 +111,12 @@ $(document).ready(function()
             form_valid = false;
             lab_file_err.slideDown();
         }
-
-        if(!test_samples_checker())
+        else
         {
-            form_valid = false;
+            if(!test_samples_checker())
+            {
+                form_valid = false;
+            }
         }
 
         if(form_valid)

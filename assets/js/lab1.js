@@ -115,6 +115,13 @@ $(document).ready(function()
             form_valid = false;
             lab_file_err.slideDown();
         }
+        else
+        {
+            if(!test_samples_checker())
+            {
+                form_valid = false;
+            }
+        }
 
         if(class_count.val() == '')
         {
@@ -125,10 +132,7 @@ $(document).ready(function()
 
         }
 
-        if(!test_samples_checker())
-        {
-            form_valid = false;
-        }
+
 
         if(form_valid)
         {

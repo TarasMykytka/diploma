@@ -58,23 +58,8 @@ if(isset($_POST['lab_id']))
         $classifier = new KNearestNeighbors($class,$distanceMethod);
 
 ////        Create Dataset
-        $samples = array();
-        $labels = array();
 
-        foreach ($data as $row)
-        {
-            $arrSamples = array();
-            $arrRow = explode(',',$row);
-            $last_index = count($arrRow)-1;
-            for ($i=0;$i<$last_index;$i++)
-            {
-                $arrSamples[] = $arrRow[$i];
-            }
-            $samples[] = $arrSamples;
-            $labels[] = $arrRow[$last_index];
-        }
-
-        $dataset = new ArrayDataset($samples, $labels);
+        $dataset = getdataset($data);
 
 
 
@@ -108,32 +93,12 @@ if(isset($_POST['lab_id']))
         $data = explode("\n",$_POST['data']);
         $split = $_POST['split'];
         $testSample = explode(',',$_POST['test-samples']);
-//        $testSample = [5.1,3.5,1.4,0.2];
-
-
-
-
 
         $classifier = new NaiveBayes();
 
-////        Create Dataset
-        $samples = array();
-        $labels = array();
+//        Create Dataset
 
-        foreach ($data as $row)
-        {
-            $arrSamples = array();
-            $arrRow = explode(',',$row);
-            $last_index = count($arrRow)-1;
-            for ($i=0;$i<$last_index;$i++)
-            {
-                $arrSamples[] = $arrRow[$i];
-            }
-            $samples[] = $arrSamples;
-            $labels[] = $arrRow[$last_index];
-        }
-
-        $dataset = new ArrayDataset($samples, $labels);
+        $dataset = getdataset($data);
 
 
 
@@ -141,10 +106,10 @@ if(isset($_POST['lab_id']))
 
         $classifier->train($randomSplit->getTrainSamples(), $randomSplit->getTrainLabels());
 
-//        $testPredict = $classifier->predict($randomSplit->getTestSamples());
+        $testPredict = $classifier->predict($randomSplit->getTestSamples());
 //
 //
-//        $report = new ClassificationReport($randomSplit->getTestLabels(), $testPredict);
+        $report = new ClassificationReport($randomSplit->getTestLabels(), $testPredict);
 //
 //        $precision = $report->getPrecision();
 
@@ -152,7 +117,7 @@ if(isset($_POST['lab_id']))
         $echoArray = array();
 
 
-//        $echoArray[] = $report->getF1score(); // Точність для тестової вибірки
+        $echoArray[] = $report->getF1score(); // Точність для тестової вибірки
 
         $echoArray[] = $classifier->predict($testSample); // Результат передбачення
 
@@ -197,28 +162,7 @@ if(isset($_POST['lab_id']))
 //        print_r($classifier);
 
 //        Create Dataset
-        $samples = array();
-        $labels = array();
-
-        foreach ($data as $row)
-        {
-            if(isset($row) && $row !='')
-            {
-                $arrSamples = array();
-                $arrRow = explode(',',$row);
-                $last_index = count($arrRow)-1;
-                for ($i=0;$i<$last_index;$i++)
-                {
-                    $arrSamples[] = $arrRow[$i];
-                }
-                $samples[] = $arrSamples;
-                $labels[] = $arrRow[$last_index];
-
-            }
-        }
-
-        $dataset = new ArrayDataset($samples, $labels);
-//        print_r($dataset);
+        $dataset = getdataset($data);
 
 
 
@@ -227,22 +171,22 @@ if(isset($_POST['lab_id']))
 //        $classifier->train($randomSplit->getTrainSamples(), $randomSplit->getTrainLabels());
 //        $classifier->train([[1, 3], [1, 4], [2, 4], [3, 1], [4, 1], [4, 2]],['a', 'a', 'a', 'b', 'b', 'b']);
 //
-//        $testPredict = $classifier->predict($randomSplit->getTestSamples());
-//
-//
-//        $report = new ClassificationReport($randomSplit->getTestLabels(), $testPredict);
-//
+        $testPredict = $classifier->predict($randomSplit->getTestSamples());
+
+
+        $report = new ClassificationReport($randomSplit->getTestLabels(), $testPredict);
+
 //        $precision = $report->getPrecision();
-//
-////        Print
-//        $echoArray = array();
-//
-//
-//        $echoArray[] = $report->getF1score(); // Точність для тестової вибірки
-//
-//        $echoArray[] = $classifier->predict($testSample); // Результат передбачення
-//
-//        echo json_encode($echoArray);
+
+//        Print
+        $echoArray = array();
+
+
+        $echoArray[] = $report->getF1score(); // Точність для тестової вибірки
+
+        $echoArray[] = $classifier->predict($testSample); // Результат передбачення
+
+        echo json_encode($echoArray);
 
 
 
@@ -258,27 +202,8 @@ if(isset($_POST['lab_id']))
 
 
 //        Create Dataset
-        $samples = array();
-        $labels = array();
 
-        foreach ($data as $row)
-        {
-            if(isset($row) && $row !='')
-            {
-                $arrSamples = array();
-                $arrRow = explode(',',$row);
-                $last_index = count($arrRow)-1;
-                for ($i=0;$i<$last_index;$i++)
-                {
-                    $arrSamples[] = $arrRow[$i];
-                }
-                $samples[] = $arrSamples;
-                $labels[] = $arrRow[$last_index];
-
-            }
-        }
-
-        $dataset = new ArrayDataset($samples, $labels);
+        $dataset = getdataset($data);
 //        print_r($dataset);
 
 
@@ -395,5 +320,26 @@ if(isset($_POST['lab_id']))
     }
 }
 
+function getdataset($data)
+{
+    $samples = array();
+    $labels = array();
+    foreach ($data as $row)
+    {
+        if(isset($row) && $row !='')
+        {
+            $arrSamples = array();
+            $arrRow = explode(',',$row);
+            $last_index = count($arrRow)-1;
+            for ($i=0;$i<$last_index;$i++)
+            {
+                $arrSamples[] = $arrRow[$i];
+            }
+            $samples[] = $arrSamples;
+            $labels[] = $arrRow[$last_index];
 
+        }
+    }
+    return new ArrayDataset($samples,$labels);
+}
 
