@@ -268,27 +268,9 @@ if(isset($_POST['lab_id']))
 //        print_r($classifier);
 
 //        Create Dataset
-        $samples = array();
-        $labels = array();
 
-        foreach ($data as $row)
-        {
-            if(isset($row) && $row !='')
-            {
-                $arrSamples = array();
-                $arrRow = explode(',',$row);
-                $last_index = count($arrRow)-1;
-                for ($i=0;$i<$last_index;$i++)
-                {
-                    $arrSamples[] = $arrRow[$i];
-                }
-                $samples[] = $arrSamples;
-                $labels[] = $arrRow[$last_index];
 
-            }
-        }
-
-        $dataset = new ArrayDataset($samples, $labels);
+        $dataset = getdataset($data);
 //        print_r($dataset);
 
 
