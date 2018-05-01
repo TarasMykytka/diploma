@@ -42,7 +42,7 @@
                         <div class="lab__num_wrapper">
                             <h3 class="lab__test-samples_title">Семпли для перевірки</h3>
                             <div class="lab__test-samples_count"></div>
-                            <input class="lab__test-samples" id="test-samples" name="test-samples" type="text" value="5.1,3.5,1.4,0.2">
+                            <input class="lab__test-samples" id="test-samples" name="test-samples" type="text" value="">
                             <div class="lab__test-samples_err">Введіть коректно семпли</div>
                         </div>
                         <input id="lab_id" name="lab_id" type="hidden" value="<?=$data[0];?>">
@@ -78,7 +78,7 @@
                         <div class="lab__num_wrapper">
                             <h3 class="lab__test-samples_title">Семпли для перевірки</h3>
                             <div class="lab__test-samples_count"></div>
-                            <input class="lab__test-samples" id="test-samples" name="test-samples" type="text" value="5.1,3.5,1.4,0.2">
+                            <input class="lab__test-samples" id="test-samples" name="test-samples" type="text" value="">
                             <div class="lab__test-samples_err">Введіть коректно семпли</div>
                         </div>
                         <input id="lab_id" name="lab_id" type="hidden" value="<?=$data[0];?>">
@@ -128,7 +128,7 @@
                         <div class="lab__num_wrapper">
                             <h3 class="lab__test-samples_title">Семпли для перевірки</h3>
                             <div class="lab__test-samples_count"></div>
-                            <input class="lab__test-samples" id="test-samples" name="test-samples" type="text" value="5.1,3.5,1.4,0.2">
+                            <input class="lab__test-samples" id="test-samples" name="test-samples" type="text" value="">
                             <div class="lab__test-samples_err">Введіть коректно семпли</div>
                         </div>
                         <input id="lab_id" name="lab_id" type="hidden" value="<?=$data[0];?>">
@@ -171,7 +171,7 @@
                         <input class="lab__submit" type="submit" value="Почати тестування">
                     </form>
                     <div class="lab__result_wrapper">
-                        <h3 class="lab__result_title">Рівняння прамої</h3>
+                        <h3 class="lab__result_title">Пряма</h3>
                         <div class="lab__result"></div>
                         <h3 class="lab__result_title">Результат передбачення</h3>
                         <div class="lab__result"></div>
