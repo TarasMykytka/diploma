@@ -25,7 +25,7 @@
             {"src" : "./assets/js/libs/jquery/jquery-1.11.2.min.js", "async" : false},
             <?if(isset($_GET['lab']))
             {
-                if($data[0] != 6) {
+                if($data[0] != 6 || $data[0] != 7) {
                     echo "{\"src\" : \"./assets/js/libs/rangeslider/rangeslider.min.js\", \"async\" : false},";
                 }
 

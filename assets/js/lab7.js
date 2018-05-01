@@ -50,19 +50,37 @@ $(document).ready(function()
     });
 
 
-    // Clasters cheker
-    var clasters = $('.lab__clasters'),
-        clasters_err = $('.lab__clasters_err'),
-        claster_checker = function ()
+    // Neighbors cheker
+    var neighbors_count = $('.lab__count-neighbors'),
+        neighbors_count_err = $('.lab__count-neighbors_err'),
+        neighbors_distance = $('.lab__distance-neighbors'),
+        neighbors_distance_err = $('.lab__distance-neighbors_err'),
+        neighbors_distance_checker = function ()
         {
-            if(clasters.val() != '')
+            if(neighbors_distance.val() != '')
             {
-                clasters_err.slideUp();
+                neighbors_distance_err.slideUp();
                 return true;
             }
             else
             {
-                clasters_err.slideDown();
+                neighbors_distance_err.slideDown();
+                return false;
+
+            }
+
+        },
+        neighbors_count_checker = function ()
+        {
+            if(neighbors_count.val() != '')
+            {
+                neighbors_count_err.slideUp();
+                neighbors_count.val(Math.round(neighbors_count.val()));
+                return true;
+            }
+            else
+            {
+                neighbors_count_err.slideDown();
                 return false;
 
             }
@@ -90,7 +108,11 @@ $(document).ready(function()
         }
         else
         {
-            if(!claster_checker())
+            if(!neighbors_distance_checker())
+            {
+                form_valid = false;
+            }
+            if(!neighbors_count_checker())
             {
                 form_valid = false;
             }
@@ -109,7 +131,11 @@ $(document).ready(function()
             }).done(function(response)
             {
 
+                // console.log(response);
+
                 data = JSON.parse(response);
+
+                // console.log(data[0]);
 
                 i=1;
                 data_result = '';
@@ -119,10 +145,15 @@ $(document).ready(function()
 
                     data_result+='<td>'+JSON.stringify(this)+'</td>';
 
+                    // console.log(this);
+                    // console.log(JSON.stringify(this));
+
+
                     data_result+='</tr>';
                     i++;
 
                 })
+                console.log(data_result);
 
                 $(result).html(data_result);
 
