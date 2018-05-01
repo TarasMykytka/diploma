@@ -144,10 +144,7 @@ $(document).ready(function()
                 data = JSON.parse(response);
                 console.log(data[0]);
 
-
-
-                // $(result[0]).text(data[0][0].toFixed(2)+'*x+'+data[0][1].toFixed(2)+'=0');
-                $(result[0]).text(data[0]);
+                $(result[0]).text(data[0].toFixed(2));
 
                 result_wrapper.slideDown();
 
