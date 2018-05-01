@@ -227,6 +227,35 @@
 
                     <?
                 }
+                elseif($data[0][0] == 6)
+                {
+                    ?>
+                    <form class="form" enctype="multipart/form-data"  accept-charset="utf-8">
+
+                        <div class="lab__file_wrapper">
+                            <h3 class="lab__file_title">Вибір файлу масиву данних</h3>
+                            <input class="lab__file" id="data" name="data" type="file" accept=".csv">
+                            <label for="data">
+                                <span>Вибрати файл...</span>
+                            </label>
+                            <div class="lab__file_err">Виберіть файл</div>
+                        </div>
+                        <div class="lab__clasters_wrapper">
+                            <h3 class="lab__clasters_title">Кількість кластерів</h3>
+                            <input class="lab__clasters" id="clasters" name="clasters" type="number" value="3">
+                            <div class="lab__clasters_err">Введіть кількість кластерів</div>
+                        </div>
+                        <input id="lab_id" name="lab_id" type="hidden" value="<?=$data[0];?>">
+                        <input class="lab__submit" type="submit" value="Почати тестування">
+                    </form>
+                    <div class="lab__result_wrapper">
+                        <h3 class="lab__result_title">Результат класифікації</h3>
+                        <table class="lab__result"></table>
+                    </div>
+                    </div>
+
+                    <?
+                }
             }
             ?>
 

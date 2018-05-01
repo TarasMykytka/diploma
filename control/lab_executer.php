@@ -21,6 +21,7 @@ use Phpml\Classification\SVC;
 use Phpml\SupportVectorMachine\Kernel;
 use Phpml\Regression\LeastSquares;
 use Phpml\Regression\SVR;
+use Phpml\Clustering\KMeans;
 
 
 if(isset($_POST['lab_id']))
@@ -300,7 +301,37 @@ if(isset($_POST['lab_id']))
 
 
     }
+    elseif($_POST['lab_id'] == 6)
+    {
+//        Get Data
+        $data = explode("\n",$_POST['data']);
+        $split = $_POST['split'];
+
+        $clasters = $_POST['clasters'];
+
+        $samples = array();
+        foreach ($data as $row)
+        {
+            if(isset($row) && $row !='')
+            {
+                $arrSamples = array();
+                $arrRow = explode(',',$row);
+                $last_index = count($arrRow);
+                for ($i=0;$i<$last_index;$i++)
+                {
+                    $arrSamples[] = $arrRow[$i];
+                }
+                $samples[] = $arrSamples;
+            }
+        }
+
+        $kmeans = new KMeans($clasters);
+
+        echo json_encode($kmeans->cluster($samples));
+
+    }
 }
+
 
 function getdataset($data)
 {
