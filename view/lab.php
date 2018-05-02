@@ -75,7 +75,7 @@
                             <input class="lab__range" id="split" name="split" type="range" min="0.01" max="0.5" step="0.01" value="0.2">
                             <input type="text" class="lab__range_output" readonly value="0.2">
                         </div>
-                        <div class="lab__num_wrapper">
+                        <div class="lab__test-samples_wrapper">
                             <h3 class="lab__test-samples_title">Семпли для перевірки</h3>
                             <div class="lab__test-samples_count"></div>
                             <input class="lab__test-samples" id="test-samples" name="test-samples" type="text" value="">
@@ -125,7 +125,7 @@
                             <input class="lab__cost" id="cost" name="cost" type="range" min="0" max="1000" step="100" value="500">
                             <input type="text" class="lab__cost_output" readonly value="500">
                         </div>
-                        <div class="lab__num_wrapper">
+                        <div class="lab__test-samples_wrapper">
                             <h3 class="lab__test-samples_title">Семпли для перевірки</h3>
                             <div class="lab__test-samples_count"></div>
                             <input class="lab__test-samples" id="test-samples" name="test-samples" type="text" value="">
@@ -161,11 +161,11 @@
                             <input class="lab__range" id="split" name="split" type="range" min="0.01" max="0.5" step="0.01" value="0.2">
                             <input type="text" class="lab__range_output" readonly value="0.2">
                         </div>
-                        <div class="lab__num_wrapper">
-                            <h3 class="lab__test-samples_title">Семпли для перевірки</h3>
+                        <div class="lab__test-samples_wrapper">
+                            <h3 class="lab__test-samples_title">Семпл для перевірки</h3>
                             <div class="lab__test-samples_count"></div>
                             <input class="lab__test-samples" id="test-samples" name="test-samples" type="text" value="">
-                            <div class="lab__test-samples_err">Введіть коректно семпли</div>
+                            <div class="lab__test-samples_err">Введіть коректно семпл</div>
                         </div>
                         <input id="lab_id" name="lab_id" type="hidden" value="<?=$data[0];?>">
                         <input class="lab__submit" type="submit" value="Почати тестування">
@@ -212,10 +212,10 @@
                             <input type="text" class="lab__cost_output" readonly value="500">
                         </div>
                         <div class="lab__test-samples_wrapper">
-                            <h3 class="lab__test-samples_title">Семпли для перевірки</h3>
+                            <h3 class="lab__test-samples_title">Семпл для перевірки</h3>
                             <div class="lab__test-samples_count"></div>
                             <input class="lab__test-samples" id="test-samples" name="test-samples" type="text" value="">
-                            <div class="lab__test-samples_err">Введіть коректно семпли</div>
+                            <div class="lab__test-samples_err">Введіть коректно семпл</div>
                         </div>
                         <input id="lab_id" name="lab_id" type="hidden" value="<?=$data[0];?>">
                         <input class="lab__submit" type="submit" value="Почати тестування">
@@ -252,7 +252,6 @@
                         <h3 class="lab__result_title">Результат кластеризації</h3>
                         <table class="lab__result"></table>
                     </div>
-                    </div>
 
                     <?
                 }
@@ -286,7 +285,6 @@
                         <h3 class="lab__result_title">Результат кластеризації</h3>
                         <table class="lab__result"></table>
                     </div>
-                    </div>
 
                     <?
                 }
@@ -314,8 +312,41 @@
                     </form>
                     <div class="lab__result_wrapper">
                         <h3 class="lab__result_title">Результат прогнозу</h3>
-                        <table class="lab__result"></table>
+                        <div class="lab__result"></div>
                     </div>
+
+                    <?
+                }
+                elseif($data[0][0] == 9)
+                {
+                    ?>
+                    <form class="form" enctype="multipart/form-data"  accept-charset="utf-8">
+
+                        <div class="lab__file_wrapper">
+                            <h3 class="lab__file_title">Вибір файлу масиву данних</h3>
+                            <input class="lab__file" id="data" name="data" type="file" accept=".csv">
+                            <label for="data">
+                                <span>Вибрати файл...</span>
+                            </label>
+                            <div class="lab__file_err">Виберіть файл</div>
+                        </div>
+                        <div class="lab__num_wrapper">
+                            <h3 class="lab__num_title">Кількість прихованих слоїв</h3>
+                            <div class="lab__num_err">Введіть прихованих слоїв</div>
+                            <input class="lab__num" id="hidden-layer" name="hidden-layer" type="number" value="3">
+                        </div>
+                        <div class="lab__test-samples_wrapper">
+                            <h3 class="lab__test-samples_title">Семпл для перевірки</h3>
+                            <div class="lab__test-samples_count"></div>
+                            <input class="lab__test-samples" id="test-samples" name="test-samples" type="text" value="5.1,3.5,1.4,0.2">
+                            <div class="lab__test-samples_err">Введіть коректно семпл</div>
+                        </div>
+                        <input id="lab_id" name="lab_id" type="hidden" value="<?=$data[0];?>">
+                        <input class="lab__submit" type="submit" value="Почати тестування">
+                    </form>
+                    <div class="lab__result_wrapper">
+                        <h3 class="lab__result_title">Результат передбачення</h3>
+                        <div class="lab__result"></div>
                     </div>
 
                     <?

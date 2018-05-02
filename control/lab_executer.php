@@ -24,6 +24,7 @@ use Phpml\Regression\SVR;
 use Phpml\Clustering\KMeans;
 use Phpml\Clustering\DBSCAN;
 use Phpml\Association\Apriori;
+use Phpml\Classification\MLPClassifier;
 
 if(isset($_POST['lab_id']))
 {
@@ -332,10 +333,29 @@ if(isset($_POST['lab_id']))
         echo json_encode($associator->predict($test));
 
     }
+    elseif($_POST['lab_id'] == 9)
+    {
+
+        $data = explode("\n",$_POST['data']);
+        $test = explode(',',$_POST['test-samples']);
+
+        $hidden_layer = intval($_POST['hidden-layer']);
+
+        $sample_count = intval($_POST['sample-count']);
+
+        $dataset = getdataset($data,false,true);
+        $elements_arr = array_unique($dataset[1]);
+
+        $mlp = new MLPClassifier($sample_count, [$hidden_layer], $elements_arr);
+
+        $mlp->train($dataset[0],$dataset[1]);
+
+//        var_dump($dataset);
+    }
 }
 
 
-function getdataset($data,$return_dataset=true)
+function getdataset($data,$return_dataset=true,$float_val=false)
 {
 //    print_r($data);
     $samples = array();
@@ -349,7 +369,14 @@ function getdataset($data,$return_dataset=true)
             $last_index = count($arrRow)-1;
             for ($i=0;$i<$last_index;$i++)
             {
-                $arrSamples[] = trim($arrRow[$i]);
+                if(!$float_val)
+                {
+                    $arrSamples[] = trim($arrRow[$i]);
+                }
+                else
+                {
+                    $arrSamples[] = floatval(trim($arrRow[$i]));
+                }
             }
             $samples[] = $arrSamples;
             $labels[] = trim($arrRow[$last_index]);
