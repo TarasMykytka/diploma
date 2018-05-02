@@ -211,7 +211,7 @@
                             <input class="lab__cost" id="cost" name="cost" type="range" min="0" max="1000" step="100" value="500">
                             <input type="text" class="lab__cost_output" readonly value="500">
                         </div>
-                        <div class="lab__num_wrapper">
+                        <div class="lab__test-samples_wrapper">
                             <h3 class="lab__test-samples_title">Семпли для перевірки</h3>
                             <div class="lab__test-samples_count"></div>
                             <input class="lab__test-samples" id="test-samples" name="test-samples" type="text" value="">
@@ -284,6 +284,36 @@
                     </form>
                     <div class="lab__result_wrapper">
                         <h3 class="lab__result_title">Результат кластеризації</h3>
+                        <table class="lab__result"></table>
+                    </div>
+                    </div>
+
+                    <?
+                }
+                elseif($data[0][0] == 8)
+                {
+                    ?>
+                    <form class="form" enctype="multipart/form-data"  accept-charset="utf-8">
+
+                        <div class="lab__file_wrapper">
+                            <h3 class="lab__file_title">Вибір файлу масиву данних</h3>
+                            <input class="lab__file" id="data" name="data" type="file" accept=".csv">
+                            <label for="data">
+                                <span>Вибрати файл...</span>
+                            </label>
+                            <div class="lab__file_err">Виберіть файл</div>
+                        </div>
+                        <div class="lab__test-samples_wrapper">
+                            <h3 class="lab__test-samples_title">Данні для прогнозу</h3>
+                            <div class="lab__test-samples_count"></div>
+                            <input class="lab__test-samples" id="test-samples" name="test-samples" type="text" value="alpha,epsilon">
+                            <div class="lab__test-samples_err">Введіть коректно данні</div>
+                        </div>
+                        <input id="lab_id" name="lab_id" type="hidden" value="<?=$data[0];?>">
+                        <input class="lab__submit" type="submit" value="Почати тестування">
+                    </form>
+                    <div class="lab__result_wrapper">
+                        <h3 class="lab__result_title">Результат прогнозу</h3>
                         <table class="lab__result"></table>
                     </div>
                     </div>

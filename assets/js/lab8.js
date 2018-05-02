@@ -23,24 +23,13 @@ $(document).ready(function()
             {
                 csv_content = e.target.result;
 
-                //    Header checker
-                header = false;
                 line_end = csv_content.indexOf('\n');
                 line = csv_content.substr(0,line_end).split(',');
-                for (i=0;i<line.length-1;i++)
-                {
-                    if (!$.isNumeric(line[i]))
-                        header = true;
-                }
-
-                if (header)
-                {
-                    csv_content = csv_content.substr(line_end+1,csv_content.length);
-                }
 
                 samples_count = line.length-1;
 
-                test_samples_count.text('Кількість семплів в масиві данних: '+samples_count).slideDown();
+                test_samples_count.text('Потрібно данних для прогнозу: '+samples_count).slideDown();
+
 
             }
             r.readAsText(f);
@@ -53,52 +42,34 @@ $(document).ready(function()
             label.html( labelVal );
     });
 
-    //Range & count
-    var lab_range = $('.lab__range'),
-        lab_range_output = $('.lab__range_output'),
-        lab_cost = $('.lab__cost'),
-        lab_cost_output = $('.lab__cost_output');
-
-    lab_range.rangeslider({
-        polyfill: false,
-        onSlide: function(position, value) {
-            lab_range_output.val(value);
-        }
-    });
-    lab_cost.rangeslider({
-        polyfill: false,
-        onSlide: function(position, value) {
-            lab_cost_output.val(value);
-        }
-    });
 
     // Samples
     var test_samples = $('.lab__test-samples'),
         test_samples_count = $('.lab__test-samples_count'),
         test_samples_err = $('.lab__test-samples_err'),
-        samples_count;
+        samples_count,
 
-    test_samples_checker = function ()
-    {
-        if(test_samples.val() != '')
+        test_samples_checker = function ()
         {
-            test_samples_arr = test_samples.val().split(',');
-            if (test_samples_arr.length != samples_count)
+            if(test_samples.val() != '')
+            {
+                test_samples_arr = test_samples.val().split(',');
+                if (test_samples_arr.length != samples_count)
+                {
+                    test_samples_err.slideDown();
+                    return false;
+                }
+                test_samples_err.slideUp();
+                return true;
+            }
+            else
             {
                 test_samples_err.slideDown();
                 return false;
+
             }
-            test_samples_err.slideUp();
-            return true;
-        }
-        else
-        {
-            test_samples_err.slideDown();
-            return false;
 
         }
-
-    }
 
 
     //    Result
@@ -125,6 +96,7 @@ $(document).ready(function()
             {
                 form_valid = false;
             }
+
         }
 
         if(form_valid)
@@ -139,7 +111,31 @@ $(document).ready(function()
             }).done(function(response)
             {
 
-                $(result[0]).text(data);
+                console.log(response);
+
+                data = JSON.parse(response);
+                //
+                // // console.log(data[0]);
+                //
+                // i=1;
+                // data_result = '';
+                // $(data).each(function ()
+                // {
+                //     data_result+='<tr><td>Кластер '+i+':</td></tr><tr>';
+                //
+                //     data_result+='<td>'+JSON.stringify(this)+'</td>';
+                //
+                //     // console.log(this);
+                //     // console.log(JSON.stringify(this));
+                //
+                //
+                //     data_result+='</tr>';
+                //     i++;
+                //
+                // })
+                // console.log(data_result);
+                //
+                $(result).text(data[0][0]);
 
                 result_wrapper.slideDown();
 

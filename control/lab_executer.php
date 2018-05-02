@@ -23,7 +23,7 @@ use Phpml\Regression\LeastSquares;
 use Phpml\Regression\SVR;
 use Phpml\Clustering\KMeans;
 use Phpml\Clustering\DBSCAN;
-
+use Phpml\Association\Apriori;
 
 if(isset($_POST['lab_id']))
 {
@@ -246,6 +246,7 @@ if(isset($_POST['lab_id']))
         $testSample = explode(',',$_POST['test-samples']);
 
 
+
         if($kernel == 'RBF')
         {
 
@@ -267,37 +268,16 @@ if(isset($_POST['lab_id']))
             $regression = new SVR(KERNEL::LINEAR, 3,0.1, $cost);
         }
 
-//        print_r($classifier);
-
 //        Create Dataset
 
-
-        $dataset = getdataset($data);
-//        print_r($dataset);
+        $dataset = getdataset($data,false);
 
 
-
-        $randomSplit = new RandomSplit($dataset, $split);
-
-        $regression->train($randomSplit->getTrainSamples(), $randomSplit->getTrainLabels());
-//        $classifier->train([[1, 3], [1, 4], [2, 4], [3, 1], [4, 1], [4, 2]],['a', 'a', 'a', 'b', 'b', 'b']);
-
-        $testPredict = $regression->predict($randomSplit->getTestSamples());
-
-
-        $report = new ClassificationReport($randomSplit->getTestLabels(), $testPredict);
-
-//        $precision = $report->getPrecision();
+        $regression->train($dataset[0], $dataset[1]);
 
 //        Print
-        $echoArray = array();
 
-
-//        $echoArray[] = $report->getF1score(); // Точність для тестової вибірки
-
-        $echoArray[] = $regression->predict($testSample); // Результат передбачення
-
-        echo json_encode($echoArray);
+        echo json_encode($regression->predict($testSample));
 
 
 
@@ -311,7 +291,7 @@ if(isset($_POST['lab_id']))
 
         $kmeans = new KMeans($clasters);
 
-        echo json_encode($kmeans->cluster(getsamples($data)));
+        echo str_replace('\r','',json_encode($kmeans->cluster(getsamples($data))));
 
     }
     elseif($_POST['lab_id'] == 7)
@@ -324,14 +304,40 @@ if(isset($_POST['lab_id']))
 
         $dbscan = new DBSCAN($epsilon,$minSamples);
 
-        echo json_encode($dbscan->cluster(getsamples($data)));
+        echo str_replace('\r','',json_encode($dbscan->cluster(getsamples($data))));
+
+    }
+    elseif($_POST['lab_id'] == 8)
+    {
+
+        $data = explode("\n",$_POST['data']);
+        $test = explode(',',$_POST['test-samples']);
+        $samples = [];
+//        print_r($data);
+        foreach ($data as $row)
+        {
+            $row_arr = explode(',',$row);
+            $row_arr_clear = [];
+            foreach ($row_arr as $el)
+            {
+                $row_arr_clear[] = trim(str_replace(['\'','""'],'',$el));
+            }
+            $samples[] = $row_arr_clear;
+        }
+//        print_r($samples);
+        $associator = new Apriori($support = 0.5, $confidence = 0.5);
+        $associator->train($samples, []);
+
+
+        echo json_encode($associator->predict($test));
 
     }
 }
 
 
-function getdataset($data)
+function getdataset($data,$return_dataset=true)
 {
+//    print_r($data);
     $samples = array();
     $labels = array();
     foreach ($data as $row)
@@ -343,14 +349,22 @@ function getdataset($data)
             $last_index = count($arrRow)-1;
             for ($i=0;$i<$last_index;$i++)
             {
-                $arrSamples[] = $arrRow[$i];
+                $arrSamples[] = trim($arrRow[$i]);
             }
             $samples[] = $arrSamples;
-            $labels[] = $arrRow[$last_index];
-
+            $labels[] = trim($arrRow[$last_index]);
         }
     }
-    return new ArrayDataset($samples,$labels);
+//    print_r($samples);
+//    print_r($labels);
+    if ($return_dataset)
+    {
+        return new ArrayDataset($samples,$labels);
+    }
+    else
+    {
+        return [$samples,$labels];
+    }
 }
 function getsamples($data)
 {

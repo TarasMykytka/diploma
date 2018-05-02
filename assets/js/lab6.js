@@ -108,7 +108,7 @@ $(document).ready(function()
                 data: data
             }).done(function(response)
             {
-
+                console.log(response);
                 data = JSON.parse(response);
 
                 i=1;
