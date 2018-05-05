@@ -337,7 +337,6 @@ if(isset($_POST['lab_id']))
     {
 
         $data = explode("\n",$_POST['data']);
-        $test = explode(',',$_POST['test-samples']);
 
         $hidden_layer = intval($_POST['hidden-layer']);
 
@@ -350,7 +349,17 @@ if(isset($_POST['lab_id']))
 
         $mlp->train($dataset[0],$dataset[1]);
 
-//        var_dump($dataset);
+
+        $test_arr = explode(',',$_POST['test-samples']);
+        $test = [];
+        foreach ($test_arr as $val)
+        {
+            $test[] = floatval($val);
+        }
+
+
+        echo $mlp->predict($test);
+
     }
 }
 

@@ -147,7 +147,7 @@ $(document).ready(function()
                 // })
                 // console.log(data_result);
                 //
-                // $(result).text(data[0][0]);
+                $(result).text(response);
 
                 result_wrapper.slideDown();
 
