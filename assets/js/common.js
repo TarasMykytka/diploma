@@ -5,6 +5,9 @@ var $ = jQuery.noConflict();
 $(document).ready(function()
 {
 
+    $(".preloader").fadeOut();
+    $(".preloader_wrapper").delay(400).fadeOut("slow");
+
     /* Disable validate error messages |
        Скрываем ошибки о валидации (используем стили) */
     // $('form').validate({
@@ -79,7 +82,5 @@ $(document).ready(function()
 
 
 
-// $(window).load(function() {
-// 	$(".loader_inner").fadeOut();
-// 	$(".loader").delay(400).fadeOut("slow");
-// });
+$(window).load(function() {
+});

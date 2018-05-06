@@ -278,7 +278,7 @@ if(isset($_POST['lab_id']))
 
 //        Print
 
-        echo json_encode($regression->predict($testSample));
+        echo $regression->predict($testSample);
 
 
 

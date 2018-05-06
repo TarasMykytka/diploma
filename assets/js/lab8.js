@@ -75,7 +75,8 @@ $(document).ready(function()
     //    Result
 
     var result = $('.lab__result'),
-        result_wrapper = $('.lab__result_wrapper');
+        result_wrapper = $('.lab__result_wrapper'),
+        lab_preloader = $('.lab__preloader_wrapper');
 
 
     //Submit
@@ -101,46 +102,24 @@ $(document).ready(function()
 
         if(form_valid)
         {
+            lab_preloader.fadeIn();
 
             data = 'data='+csv_content+'&'+$('.form').serialize();
-
-            $.ajax({
-                type: "POST",
-                url: "control\\lab_executer.php",
-                data: data
-            }).done(function(response)
+            setTimeout(function ()
             {
+                $.ajax({
+                    type: "POST",
+                    url: "control\\lab_executer.php",
+                    data: data
+                }).done(function(response)
+                {
+                    data = JSON.parse(response);
+                    $(result).text(data[0][0]);
 
-                console.log(response);
-
-                data = JSON.parse(response);
-                //
-                // // console.log(data[0]);
-                //
-                // i=1;
-                // data_result = '';
-                // $(data).each(function ()
-                // {
-                //     data_result+='<tr><td>Кластер '+i+':</td></tr><tr>';
-                //
-                //     data_result+='<td>'+JSON.stringify(this)+'</td>';
-                //
-                //     // console.log(this);
-                //     // console.log(JSON.stringify(this));
-                //
-                //
-                //     data_result+='</tr>';
-                //     i++;
-                //
-                // })
-                // console.log(data_result);
-                //
-                $(result).text(data[0][0]);
-
-                result_wrapper.slideDown();
-
-
-            });
+                    lab_preloader.fadeOut();
+                    result_wrapper.slideDown();
+                });
+            },400)
         }
     });
 })

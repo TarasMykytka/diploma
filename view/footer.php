@@ -1,3 +1,10 @@
+
+    <div class="preloader_wrapper">
+        <div class="preloader">
+            <div class="preloader_spinner">Завантаження...</div>
+        </div>
+    </div>
+
     <!--[if lt IE 9]>
     <script src="./assets/js/libs/html5shiv/es5-shim.min.js"></script>
     <script src="./assets/js/libs/html5shiv/html5shiv.min.js"></script>
@@ -33,10 +40,10 @@
                 {
                         echo "{\"src\" : \"./assets/js/libs/function-plot/d3.min.js\", \"async\" : false},{\"src\" : \"./assets/js/libs/function-plot/function-plot.js\", \"async\" : false},";
                 }
-                echo "{\"src\" : \"./assets/js/lab".$data[0].".js?v0.1\", \"async\" : false},";
+                echo "{\"src\" : \"./assets/js/lab".$data[0].".js?v0.2\", \"async\" : false},";
             }
             ?>
-            {"src" : "./assets/js/common.js?v0.1", "async" : false}
+            {"src" : "./assets/js/common.js?v0.2", "async" : false}
 
         ]};!function(t,n,r){"use strict";var c=function(t){if("[object Array]"!==Object.prototype.toString.call(t))return!1;for(var r=0;r<t.length;r++){var c=n.createElement("script"),e=t[r];c.src=e.src,c.async=e.async,n.body.appendChild(c)}return!0};t.addEventListener?t.addEventListener("load",function(){c(r.scripts);},!1):t.attachEvent?t.attachEvent("onload",function(){c(r.scripts)}):t.onload=function(){c(r.scripts)}}(window,document,scr);
     </script>

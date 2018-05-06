@@ -40,7 +40,7 @@ $(document).ready(function()
 
                 samples_count = line.length-1;
 
-                test_samples_count.text('Кількість семплів в масиві данних: '+samples_count).slideDown();
+                test_samples_count.text('Кількість данних в семплі: '+samples_count).slideDown();
 
             }
             r.readAsText(f);
@@ -63,10 +63,6 @@ $(document).ready(function()
             lab_range_output.val(value);
         }
     });
-
-    // Class count
-    var class_count = $('.lab__num'),
-        class_count_err = $('.lab__num_err');
 
     // Samples
     var test_samples = $('.lab__test-samples'),
@@ -100,7 +96,8 @@ $(document).ready(function()
     //    Result
 
     var result = $('.lab__result'),
-        result_wrapper = $('.lab__result_wrapper');
+        result_wrapper = $('.lab__result_wrapper'),
+        lab_preloader = $('.lab__preloader_wrapper');
 
 
     //Submit
@@ -123,57 +120,50 @@ $(document).ready(function()
             }
         }
 
-        if(class_count.val() == '')
-        {
-            form_valid = false;
-            class_count_err.slideDown();
-        }else{
-            class_count_err.slideUp();
-
-        }
-
 
 
         if(form_valid)
         {
+            lab_preloader.fadeIn();
 
             data = 'data='+csv_content+'&'+$('.form').serialize();
-
-            $.ajax({
-                type: "POST",
-                url: "control\\lab_executer.php",
-                data: data
-            }).done(function(response)
+            setTimeout(function ()
             {
-
-                data = JSON.parse(response);
-
-                keys = Object.keys(data[0]);
-                vals = Object.values(data[0]);
-
-                keys_tr = '<tr>';
-                vals_tr = '<tr>';
-
-                $(keys).each(function ()
+                $.ajax({
+                    type: "POST",
+                    url: "control\\lab_executer.php",
+                    data: data
+                }).done(function(response)
                 {
-                    keys_tr += '<td>'+this+'</td>';
+
+                    data = JSON.parse(response);
+
+                    keys = Object.keys(data[0]);
+                    vals = Object.values(data[0]);
+
+                    keys_tr = '<tr>';
+                    vals_tr = '<tr>';
+
+                    $(keys).each(function ()
+                    {
+                        keys_tr += '<td>'+this+'</td>';
+                    });
+
+                    $(vals).each(function ()
+                    {
+                        vals_tr += '<td>'+this.toFixed(2)+'</td>';
+                    });
+
+                    keys_tr += '</tr>';
+                    vals_tr += '</tr>';
+
+                    $(result[0]).html(keys_tr+vals_tr);
+                    $(result[1]).text(data[1]);
+
+                    lab_preloader.fadeOut();
+                    result_wrapper.slideDown();
                 });
-
-                $(vals).each(function ()
-                {
-                    vals_tr += '<td>'+this.toFixed(2)+'</td>';
-                });
-
-                keys_tr += '</tr>';
-                vals_tr += '</tr>';
-
-                $(result[0]).html(keys_tr+vals_tr);
-                $(result[1]).text(data[1]);
-
-                result_wrapper.slideDown();
-
-
-            });
+            },400)
         }
     });
 })

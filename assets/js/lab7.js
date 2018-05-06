@@ -50,48 +50,12 @@ $(document).ready(function()
     });
 
 
-    // Neighbors cheker
-    var neighbors_count = $('.lab__count-neighbors'),
-        neighbors_count_err = $('.lab__count-neighbors_err'),
-        neighbors_distance = $('.lab__distance-neighbors'),
-        neighbors_distance_err = $('.lab__distance-neighbors_err'),
-        neighbors_distance_checker = function ()
-        {
-            if(neighbors_distance.val() != '')
-            {
-                neighbors_distance_err.slideUp();
-                return true;
-            }
-            else
-            {
-                neighbors_distance_err.slideDown();
-                return false;
-
-            }
-
-        },
-        neighbors_count_checker = function ()
-        {
-            if(neighbors_count.val() != '')
-            {
-                neighbors_count_err.slideUp();
-                neighbors_count.val(Math.round(neighbors_count.val()));
-                return true;
-            }
-            else
-            {
-                neighbors_count_err.slideDown();
-                return false;
-
-            }
-
-        }
-
 
     //    Result
 
     var result = $('.lab__result'),
-        result_wrapper = $('.lab__result_wrapper');
+        result_wrapper = $('.lab__result_wrapper'),
+        lab_preloader = $('.lab__preloader_wrapper');
 
 
     //Submit
@@ -106,61 +70,41 @@ $(document).ready(function()
             form_valid = false;
             lab_file_err.slideDown();
         }
-        else
-        {
-            if(!neighbors_distance_checker())
-            {
-                form_valid = false;
-            }
-            if(!neighbors_count_checker())
-            {
-                form_valid = false;
-            }
-
-        }
 
         if(form_valid)
         {
+            lab_preloader.fadeIn();
 
             data = 'data='+csv_content+'&'+$('.form').serialize();
-
-            $.ajax({
-                type: "POST",
-                url: "control\\lab_executer.php",
-                data: data
-            }).done(function(response)
+            setTimeout(function ()
             {
-
-                // console.log(response);
-
-                data = JSON.parse(response);
-
-                // console.log(data[0]);
-
-                i=1;
-                data_result = '';
-                $(data).each(function ()
+                $.ajax({
+                    type: "POST",
+                    url: "control\\lab_executer.php",
+                    data: data
+                }).done(function(response)
                 {
-                    data_result+='<tr><td>Кластер '+i+':</td></tr><tr>';
+                    data = JSON.parse(response);
 
-                    data_result+='<td>'+JSON.stringify(this)+'</td>';
+                    i=1;
+                    data_result = '';
+                    $(data).each(function ()
+                    {
+                        data_result+='<tr><td>Кластер '+i+':</td></tr><tr>';
 
-                    // console.log(this);
-                    // console.log(JSON.stringify(this));
+                        data_result+='<td>'+JSON.stringify(this)+'</td>';
 
+                        data_result+='</tr>';
+                        i++;
 
-                    data_result+='</tr>';
-                    i++;
+                    })
 
-                })
-                console.log(data_result);
+                    $(result).html(data_result);
 
-                $(result).html(data_result);
-
-                result_wrapper.slideDown();
-
-
-            });
+                    lab_preloader.fadeOut();
+                    result_wrapper.slideDown();
+                });
+            },400)
         }
     });
 })

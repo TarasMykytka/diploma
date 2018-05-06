@@ -40,7 +40,7 @@ $(document).ready(function()
 
                 samples_count = line.length-1;
 
-                test_samples_count.text('Кількість семплів в масиві данних: '+samples_count).slideDown();
+                test_samples_count.text('Кількість данних в семплі: '+samples_count).slideDown();
 
             }
             r.readAsText(f);
@@ -104,7 +104,8 @@ $(document).ready(function()
     //    Result
 
     var result = $('.lab__result'),
-        result_wrapper = $('.lab__result_wrapper');
+        result_wrapper = $('.lab__result_wrapper'),
+        lab_preloader = $('.lab__preloader_wrapper');
 
 
     //Submit
@@ -129,22 +130,26 @@ $(document).ready(function()
 
         if(form_valid)
         {
+            lab_preloader.fadeIn();
 
             data = 'data='+csv_content+'&'+$('.form').serialize();
-
-            $.ajax({
-                type: "POST",
-                url: "control\\lab_executer.php",
-                data: data
-            }).done(function(response)
+            setTimeout(function ()
             {
+                $.ajax({
+                    type: "POST",
+                    url: "control\\lab_executer.php",
+                    data: data
+                }).done(function(response)
+                {
 
-                $(result[0]).text(data);
+                    $(result[0]).text(response);
 
-                result_wrapper.slideDown();
+                    lab_preloader.fadeOut();
+                    result_wrapper.slideDown();
 
 
-            });
+                });
+            },400)
         }
     });
 })

@@ -49,31 +49,11 @@ $(document).ready(function()
             label.html( labelVal );
     });
 
-
-    // Clasters cheker
-    var clasters = $('.lab__clasters'),
-        clasters_err = $('.lab__clasters_err'),
-        claster_checker = function ()
-        {
-            if(clasters.val() != '')
-            {
-                clasters_err.slideUp();
-                return true;
-            }
-            else
-            {
-                clasters_err.slideDown();
-                return false;
-
-            }
-
-        }
-
-
     //    Result
 
     var result = $('.lab__result'),
-        result_wrapper = $('.lab__result_wrapper');
+        result_wrapper = $('.lab__result_wrapper'),
+        lab_preloader = $('.lab__preloader_wrapper');
 
 
     //Submit
@@ -88,48 +68,42 @@ $(document).ready(function()
             form_valid = false;
             lab_file_err.slideDown();
         }
-        else
-        {
-            if(!claster_checker())
-            {
-                form_valid = false;
-            }
-
-        }
 
         if(form_valid)
         {
+            lab_preloader.fadeIn();
 
             data = 'data='+csv_content+'&'+$('.form').serialize();
-
-            $.ajax({
-                type: "POST",
-                url: "control\\lab_executer.php",
-                data: data
-            }).done(function(response)
+            setTimeout(function ()
             {
-                console.log(response);
-                data = JSON.parse(response);
-
-                i=1;
-                data_result = '';
-                $(data).each(function ()
+                $.ajax({
+                    type: "POST",
+                    url: "control\\lab_executer.php",
+                    data: data
+                }).done(function(response)
                 {
-                    data_result+='<tr><td>Кластер '+i+':</td></tr><tr>';
+                    console.log(response);
+                    data = JSON.parse(response);
 
-                    data_result+='<td>'+JSON.stringify(this)+'</td>';
+                    i=1;
+                    data_result = '';
+                    $(data).each(function ()
+                    {
+                        data_result+='<tr><td>Кластер '+i+':</td></tr><tr>';
 
-                    data_result+='</tr>';
-                    i++;
+                        data_result+='<td>'+JSON.stringify(this)+'</td>';
 
-                })
+                        data_result+='</tr>';
+                        i++;
 
-                $(result).html(data_result);
+                    })
 
-                result_wrapper.slideDown();
+                    $(result).html(data_result);
 
-
-            });
+                    lab_preloader.fadeOut();
+                    result_wrapper.slideDown();
+                });
+            },400)
         }
     });
 })

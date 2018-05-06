@@ -40,7 +40,7 @@ $(document).ready(function()
 
                 samples_count = line.length-1;
 
-                test_samples_count.text('Кількість семплів в масиві данних: '+samples_count).slideDown();
+                test_samples_count.text('Кількість данних в семплі: '+samples_count).slideDown();
 
             }
             r.readAsText(f);
@@ -96,7 +96,8 @@ $(document).ready(function()
     //    Result
 
     var result = $('.lab__result'),
-        result_wrapper = $('.lab__result_wrapper');
+        result_wrapper = $('.lab__result_wrapper'),
+        lab_preloader = $('.lab__preloader_wrapper');
 
 
     //Submit
@@ -122,50 +123,58 @@ $(document).ready(function()
 
         if(form_valid)
         {
+            lab_preloader.fadeIn();
 
             data = 'data='+csv_content+'&'+$('.form').serialize();
 
-            $.ajax({
-                type: "POST",
-                url: "control\\lab_executer.php",
-                data: data
-            }).done(function(response)
+            setTimeout(function ()
             {
-
-                data = JSON.parse(response);
-                // console.log(data[0][0][0],data[0][1])
-                width = 550;
-                if($(window).width() < 800 )
+                $.ajax({
+                    type: "POST",
+                    url: "control\\lab_executer.php",
+                    data: data
+                }).done(function(response)
                 {
-                    width = 350;
-                }
-                y = data[0][1].toFixed(2);
-                yLow = y - 4;
-                yTop = yLow+8;
-                functionPlot({
-                    target: result[0],
-                    width: width,
-                    yAxis: {domain: [ yLow, yTop]},
-                    title: data[0][0][0].toFixed(2)+'*x+'+y,
-                    data: [{
-                        fn: data[0][0][0].toFixed(2)+'*x+'+y
-                    }],
-                    annotations: [{
-                        y: y,
-                        text: 'y = ' + y
-                    }]
+
+                    data = JSON.parse(response);
+                    // console.log(data[0][0][0],data[0][1])
+
+                    $('.function-plot').remove();
+
+                    width = 550;
+                    if($(window).width() < 800 )
+                    {
+                        width = 350;
+                    }
+                    y = data[0][1].toFixed(2);
+                    yLow = y - 4;
+                    yTop = yLow+8;
+                    functionPlot({
+                        target: result[0],
+                        width: width,
+                        yAxis: {domain: [ yLow, yTop]},
+                        title: data[0][0][0].toFixed(2)+'*x+'+y,
+                        data: [{
+                            fn: data[0][0][0].toFixed(2)+'*x+'+y
+                        }],
+                        annotations: [{
+                            y: y,
+                            text: 'y = ' + y
+                        }]
+                    });
+
+
+
+
+
+                    $(result[1]).text(data[1].toFixed(2));
+
+                    lab_preloader.fadeOut();
+                    result_wrapper.slideDown();
+
+
                 });
-
-
-
-
-
-                $(result[1]).text(data[1].toFixed(2));
-
-                result_wrapper.slideDown();
-
-
-            });
+            },400)
         }
     });
 })

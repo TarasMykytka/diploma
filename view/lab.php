@@ -27,8 +27,7 @@
                         </div>
                         <div class="lab__num_wrapper">
                             <h3 class="lab__num_title">Кількість класів</h3>
-                            <div class="lab__num_err">Введіть кількість класів</div>
-                            <input class="lab__num" id="class" name="class" type="number" value="3">
+                            <input class="lab__num" id="class" name="class" type="number" min="1" value="3">
                         </div>
                         <div class="lab__distance_wrapper">
                             <h3 class="lab__distance_title">Метод обчислення відстані</h3>
@@ -40,10 +39,10 @@
                             </select>
                         </div>
                         <div class="lab__num_wrapper">
-                            <h3 class="lab__test-samples_title">Семпли для перевірки</h3>
+                            <h3 class="lab__test-samples_title">Семпл для перевірки</h3>
                             <div class="lab__test-samples_count"></div>
                             <input class="lab__test-samples" id="test-samples" name="test-samples" type="text" value="">
-                            <div class="lab__test-samples_err">Введіть коректно семпли</div>
+                            <div class="lab__test-samples_err">Введіть коректно семпл</div>
                         </div>
                         <input id="lab_id" name="lab_id" type="hidden" value="<?=$data[0];?>">
                         <input class="lab__submit" type="submit" value="Почати тестування">
@@ -76,10 +75,10 @@
                             <input type="text" class="lab__range_output" readonly value="0.2">
                         </div>
                         <div class="lab__test-samples_wrapper">
-                            <h3 class="lab__test-samples_title">Семпли для перевірки</h3>
+                            <h3 class="lab__test-samples_title">Семпл для перевірки</h3>
                             <div class="lab__test-samples_count"></div>
                             <input class="lab__test-samples" id="test-samples" name="test-samples" type="text" value="">
-                            <div class="lab__test-samples_err">Введіть коректно семпли</div>
+                            <div class="lab__test-samples_err">Введіть коректно семпл</div>
                         </div>
                         <input id="lab_id" name="lab_id" type="hidden" value="<?=$data[0];?>">
                         <input class="lab__submit" type="submit" value="Почати тестування">
@@ -126,10 +125,10 @@
                             <input type="text" class="lab__cost_output" readonly value="500">
                         </div>
                         <div class="lab__test-samples_wrapper">
-                            <h3 class="lab__test-samples_title">Семпли для перевірки</h3>
+                            <h3 class="lab__test-samples_title">Семпл для перевірки</h3>
                             <div class="lab__test-samples_count"></div>
                             <input class="lab__test-samples" id="test-samples" name="test-samples" type="text" value="">
-                            <div class="lab__test-samples_err">Введіть коректно семпли</div>
+                            <div class="lab__test-samples_err">Введіть коректно семпл</div>
                         </div>
                         <input id="lab_id" name="lab_id" type="hidden" value="<?=$data[0];?>">
                         <input class="lab__submit" type="submit" value="Почати тестування">
@@ -242,8 +241,7 @@
                         </div>
                         <div class="lab__clasters_wrapper">
                             <h3 class="lab__clasters_title">Кількість кластерів</h3>
-                            <input class="lab__clasters" id="clasters" name="clasters" type="number" value="3">
-                            <div class="lab__clasters_err">Введіть кількість кластерів</div>
+                            <input class="lab__clasters" id="clasters" name="clasters" type="number" min="1" value="3">
                         </div>
                         <input id="lab_id" name="lab_id" type="hidden" value="<?=$data[0];?>">
                         <input class="lab__submit" type="submit" value="Почати тестування">
@@ -270,13 +268,11 @@
                         </div>
                         <div class="lab__distance-neighbors_wrapper">
                             <h3 class="lab__distance-neighbors_title">Максимальна відстань між сусідами</h3>
-                            <input class="lab__distance-neighbors" id="distance-neighbors" name="distance-neighbors" type="number" value="2" step=".1">
-                            <div class="lab__distance-neighbors_err">Введіть максимальну відстань між сусідами</div>
+                            <input class="lab__distance-neighbors" id="distance-neighbors" name="distance-neighbors" type="number" min=".1" value="2" step=".1">
                         </div>
                         <div class="lab__count-neighbors_wrapper">
                             <h3 class="lab__count-neighbors_title">Мінімальна кількість сусідів в кластері</h3>
-                            <input class="lab__count-neighbors" id="count-neighbors" name="count-neighbors" type="number" value="3" step="1">
-                            <div class="lab__count-neighbors_err">Введіть мінімальну кількість сусідів в кластері</div>
+                            <input class="lab__count-neighbors" id="count-neighbors" name="count-neighbors" type="number" min="1" value="3" step="1">
                         </div>
                         <input id="lab_id" name="lab_id" type="hidden" value="<?=$data[0];?>">
                         <input class="lab__submit" type="submit" value="Почати тестування">
@@ -304,7 +300,7 @@
                         <div class="lab__test-samples_wrapper">
                             <h3 class="lab__test-samples_title">Данні для прогнозу</h3>
                             <div class="lab__test-samples_count"></div>
-                            <input class="lab__test-samples" id="test-samples" name="test-samples" type="text" value="alpha,epsilon">
+                            <input class="lab__test-samples" id="test-samples" name="test-samples" type="text" value="">
                             <div class="lab__test-samples_err">Введіть коректно данні</div>
                         </div>
                         <input id="lab_id" name="lab_id" type="hidden" value="<?=$data[0];?>">
@@ -333,7 +329,7 @@
                         <div class="lab__num_wrapper">
                             <h3 class="lab__num_title">Кількість прихованих слоїв</h3>
                             <div class="lab__num_err">Введіть прихованих слоїв</div>
-                            <input class="lab__num" id="hidden-layer" name="hidden-layer" type="number" value="3">
+                            <input class="lab__num" id="hidden-layer" name="hidden-layer" type="number" min="1" value="3">
                         </div>
                         <div class="lab__test-samples_wrapper">
                             <h3 class="lab__test-samples_title">Семпл для перевірки</h3>
@@ -354,6 +350,13 @@
             }
             ?>
 
+        </div>
+    </div>
+
+    <div class="lab__preloader_wrapper">
+        <div class="lab__preloader">
+            <h4 class="lab__preloader_title">Опрацювання</h4>
+            <div class="lab__preloader_spinner">Опрацювання...</div>
         </div>
     </div>
 <?require_once('view/footer.php');
