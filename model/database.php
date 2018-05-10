@@ -4,9 +4,9 @@ class database
 {
   public $db;
 
-  public function get_labs($id=NULL)
+  public function get_labs($id)
   {
-    $file = file('labs.data');
+    $file = file('./labs.data');
     $data = [];
     foreach ($file as $line) {
       $data[] = str_getcsv($line);
