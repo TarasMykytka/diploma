@@ -34,7 +34,7 @@
     <link rel="icon" type="image/png" href="./assets/img/favicons/favicon-128.png" sizes="128x128" />
 
 
-    <link rel="stylesheet" href="./assets/css/common.css?v0.2">
+    <link rel="stylesheet" href="./assets/css/common.css?v0.3">
 </head>
 
 <body>
